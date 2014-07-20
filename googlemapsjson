@@ -1,0 +1,130 @@
+var berlin = new google.maps.LatLng(-6.197216,106.846054);
+
+var neighborhoods = [
+  {
+  	"lat":-6.243292,
+  	"lng":106.848511,
+  	"description":"Memikirkan pendidikan adalah menyiapkan masa depan"
+  },
+  {
+  	"lat":-6.257967,
+  	"lng":106.951507,
+  	"description":"Pada guru kita titipkan persiapan masa depan republik ini"
+  },
+  {
+  	"lat":-6.267864,
+  	"lng":107.031158,
+  	"description":"Perhargaan terhadap guru adalah gambaran penghargaan terhadap persiapan masa depan"
+  },
+  {
+  	"lat":-6.337479,
+  	"lng":107.187713,
+  	"description":"Mengangkat nasib guru adalah meninggikan harap untuk masa depan yang lebih baik"
+  }
+  // new google.maps.LatLng(-6.243292,106.848511),
+  // new google.maps.LatLng(-6.257967,106.951507),
+  // new google.maps.LatLng(-6.267864,107.031158),
+  // new google.maps.LatLng(-6.337479,107.187713),
+  // new google.maps.LatLng(-6.358293,107.341522),
+  // new google.maps.LatLng(-6.402648,107.410873),
+  // new google.maps.LatLng(-6.472245,107.480911),
+  // new google.maps.LatLng(-6.550699,107.442802),
+  // new google.maps.LatLng(-7.794337,110.362617),
+  // new google.maps.LatLng(-7.788384,110.427505),
+  // new google.maps.LatLng(-7.69313,110.490677),
+  // new google.maps.LatLng(-7.686538,110.411261)
+
+  // new google.maps.LatLng(52.535647,13.530296),
+  // new google.maps.LatLng(52.497832,13.583168),
+  // new google.maps.LatLng(52.492606,13.686165),
+  // new google.maps.LatLng(52.390268,13.868126),
+  // new google.maps.LatLng(52.30491,14.17334),
+  // new google.maps.LatLng(52.312047,14.313072),
+  // new google.maps.LatLng(52.201926,14.085106),
+  // new google.maps.LatLng(52.123582,14.147934),
+  // new google.maps.LatLng(52.087945,14.150192),
+  // new google.maps.LatLng(52.005385,14.193794),
+  // new google.maps.LatLng(51.848929,14.124877),
+  // new google.maps.LatLng(51.694693,14.321945),
+  // new google.maps.LatLng(51.356346,14.500473),
+  // new google.maps.LatLng(51.234407,14.386489)
+];
+
+var markers = [];
+var iterator = 0;
+
+var map;
+var infowindow = new google.maps.InfoWindow({
+    content: "dae"
+  });
+function initialize() {
+  var mapOptions = {
+    zoom: 12,
+    center: berlin,
+    disableDefaultUI: true
+  };
+
+  map = new google.maps.Map(document.getElementById('map-canvas'),
+          mapOptions);
+}
+
+function drop() {
+  for (var i = 0; i <= neighborhoods.length; i++) {
+    setTimeout(function() {
+      addMarker();
+    }, i * 4000);
+  }
+}
+
+function attachSecretMessage(marker, num) {
+  var message = 
+  ['Memikirkan pendidikan adalah menyiapkan masa depan',
+   'Pada guru kita titipkan persiapan masa depan republik ini', 
+   'Perhargaan terhadap guru adalah gambaran penghargaan terhadap persiapan masa depan', 
+   'Mengangkat nasib guru adalah meninggikan harap untuk masa depan yang lebih baik',
+   'Karakter bukan diajarkan lewat teori dan wejangan, karakter diajarkan pakai teladan dengan contoh nyata',
+   'Bukan ceramahi anak-anak dengan karakter, tetapi ingatkan orang tua dan guru tentang karakter',
+   'Orang tua dan guru yang harus diceramahi tentang karakter agar sadar bahwa anaknya adalah cerminan karakter mereka',
+   'Berhenti anggap cuma anak yang perlu belajar. Justru orangtualah yang paling perlu belajar jadi pendidik',
+   'Korupsi adalah penghambat kemajuan yang luarbiasa efektif',
+   'Perangi korupsi bukan cuma tugas penegak hukum, dunia pendidikan harus memangkas suply potensi koruptor',
+   'Indonesia perlu banyak pemimpin di berbagai sektor yang punya world class competence and grass root understanding',
+   'Ya memang untuk merebut cita-cita bangsa ini kita perlu lebih banyak orang siuman, bukan yang sedang terbius'];
+  var infowindow = new google.maps.InfoWindow({
+    content: neighborhoods[num].description,
+    maxWidth:200
+  });
+
+  setTimeout(function() {
+    infowindow.open(marker.get('map'), marker);
+  }, 500);
+  // setTimeout(function() {
+    // infowindow.close();
+  // }, 100);
+}
+
+function addMarker() {
+  // markers.push(new google.maps.Marker({
+  //   position: neighborhoods[iterator],
+  //   map: map,
+  //   draggable: false,
+  //   animation: google.maps.Animation.DROP
+  // }));
+  // map.panTo(neighborhoods[iterator]);
+  // iterator++;
+  var latLng = new google.maps.LatLng(neighborhoods[iterator].lat, neighborhoods[iterator].lng); 
+  var marker = new google.maps.Marker({
+  	position:latLng,
+  	map:map,
+  	draggable:false,
+  	animation:google.maps.Animation.DROP
+  });
+  map.panTo(neighborhoods[iterator]);
+  attachSecretMessage(marker,iterator);
+  setTimeout(function() {
+    marker.setMap(null)
+  }, 4000);
+  iterator++;
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
